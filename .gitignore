@@ -1,0 +1,16 @@
+/build/
+/dist/
+/third_party/adobe-sdk-local/
+/.vs/
+.idea/
+.vscode/
+.cache/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+*.aex
+*.zip
+*.sha256
+Thumbs.db
+.DS_Store

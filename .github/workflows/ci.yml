@@ -1,0 +1,36 @@
+name: Core CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: ${{ matrix.os }} / Release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Configure SDK-free core
+        run: >-
+          cmake -S . -B build/ci
+          -DCMAKE_BUILD_TYPE=Release
+          -DLINEAR_BUILD_ADOBE_PLUGIN=OFF
+          -DLINEAR_BUILD_TESTS=ON
+          -DLINEAR_BUILD_BENCHMARKS=ON
+
+      - name: Build
+        run: cmake --build build/ci --config Release --parallel
+
+      - name: Test
+        run: ctest --test-dir build/ci -C Release --output-on-failure

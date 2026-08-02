@@ -1,0 +1,76 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 24,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "windows-debug",
+      "displayName": "Windows Debug (core, tests, benchmarks)",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/windows-debug",
+      "architecture": "x64",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "LINEAR_BUILD_TESTS": "ON",
+        "LINEAR_BUILD_BENCHMARKS": "ON",
+        "LINEAR_BUILD_ADOBE_PLUGIN": "OFF"
+      }
+    },
+    {
+      "name": "windows-adobe",
+      "inherits": "windows-debug",
+      "displayName": "Windows Adobe plug-in",
+      "binaryDir": "${sourceDir}/build/windows-adobe",
+      "cacheVariables": {
+        "LINEAR_BUILD_ADOBE_PLUGIN": "ON"
+      }
+    },
+    {
+      "name": "macos-release",
+      "displayName": "macOS Release (core)",
+      "generator": "Xcode",
+      "binaryDir": "${sourceDir}/build/macos-release",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Release",
+        "LINEAR_BUILD_TESTS": "ON",
+        "LINEAR_BUILD_BENCHMARKS": "ON",
+        "LINEAR_BUILD_ADOBE_PLUGIN": "OFF"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-debug",
+      "configurePreset": "windows-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "windows-release",
+      "configurePreset": "windows-debug",
+      "configuration": "Release"
+    },
+    {
+      "name": "windows-adobe-release",
+      "configurePreset": "windows-adobe",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "windows-debug",
+      "configurePreset": "windows-debug",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

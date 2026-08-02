@@ -1,0 +1,12 @@
+* text=auto
+*.cpp text eol=lf
+*.h text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.cmake text eol=lf
+*.in text eol=lf
+*.ps1 text eol=crlf
+*.aex binary
+*.png binary
+*.zip binary
